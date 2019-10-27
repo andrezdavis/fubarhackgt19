@@ -1,19 +1,97 @@
 extends layout
 
 block content
-  button#getit get
 
+  p first name:
+  input#fname
+  p last name:
+  input#lname
+  p email:
+  input#email
+  p username:
+  input#username
+  p password:
+  input#password
+  p weekly budget:
+  input#weeklyBudget
+  button#signup Sign up
+  button#login Log in
   script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js')
   script.
     $(document).ready(function() {
       $('#getit').click(function() {
+        $.ajax({
+          url: "http://localhost:3000",
+          type: 'POST',
+          contentType: 'application/json',
+          success: function(data) {
+
+           console.log(JSON.parse(data))
+          },
+          error: function() {
+          console.log('error with get request')
+          }
+        })
+      })
+      $('#getUsers').click(function() {
 
         $.ajax({
-          url: ,
+          url: "http://localhost:3000/buttonpress",
           type: 'GET',
           contentType: 'application/json',
           success: function(data) {
+
+           console.log(JSON.parse(data))
+          },
+          error: function() {
+          console.log('error with get request')
+          }
+        })
+      })
+
+
+      $('#signup').click(function() {
+        var signupobj = {
+                    fname: document.getElementById('fname').value,
+                    lname: document.getElementById('lname').value,
+                    username: document.getElementById('username').value,
+                    email: document.getElementById('email').value,
+                    password: document.getElementById('password').value,
+                    weeklyBudget: document.getElementById('weeklyBudget').value
+                };
+        $.ajax({
+          url: "http://localhost:3000/signup",
+          type: 'POST',
+          data: JSON.stringify(signupobj),
+          contentType: 'application/json',
+          success: function(data) {
+
            console.log(data)
+           window.location.href = 'http://localhost:3000/profile'
+          },
+          error: function() {
+          console.log('error with get request')
+          }
+        })
+      })
+      $('#login').click(function() {
+      var signupobj = {
+                  fname: document.getElementById('fname').value,
+                  lname: document.getElementById('lname').value,
+                  username: document.getElementById('username').value,
+                  email: document.getElementById('email').value,
+                  password: document.getElementById('password').value,
+                  weeklyBudget: document.getElementById('weeklyBudget').value
+              };
+        $.ajax({
+          url: "http://localhost:3000/login",
+          type: 'POST',
+          data: JSON.stringify(signupobj),
+          contentType: 'application/json',
+          success: function(data) {
+
+           console.log(data)
+           window.location.href = 'http://localhost:3000/profile'
           },
           error: function() {
           console.log('error with get request')

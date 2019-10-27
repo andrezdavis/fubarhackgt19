@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  link(rel='stylesheet' href='/stylesheets/market.css')
+  - for (var x = 0; x < marketItems.length; x++)
+    .div#x0
+      p= marketItems[x]['item name']
+      p= marketItems[x]['item description']
+      p= marketItems[x]['item price'] + " dollars"
+      button#x buy
+   script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js')
+   script.
+     $(document).ready(function() {
+        
+     })

@@ -1,0 +1,42 @@
+extends layout
+
+block content
+  b Budget can only be set once per week
+  p#budget Current Budget: #{body.weeklyBudget|0}
+  p#savedMon Saved Money: #{body.savedMoney | 0}
+  p#moneySpent Money Spent: #{body.moneySpent| 0}
+  p#left Money Left: #{body.weeklyBudget|0 - body.savedMoney|0 - body.moneySpent|0}
+  #saveMoney
+    input#moneySave(placeholder="How much will you save?")
+    button#save save
+  button#goToMarket Go To Marketplace
+  script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js')
+  script.
+    $(document).ready(function() {
+    var obj = {
+              savedMoney: document.getElementById('moneySave').value
+            };
+    $('#save').click(function() {
+      var obj = {
+        savedMoney: document.getElementById('moneySave').value
+      }
+      $.ajax({
+        url: "http://localhost:3000/users/setSavedMoney",
+        type: 'PUT',
+        data: JSON.stringify(obj),
+        contentType: 'application/json',
+        success: function(data) {
+
+         console.log(JSON.parse(data))
+        },
+        error: function() {
+        console.log('error with get request')
+        }
+      })
+    })
+    document.getElementById('goToMarket').onclick = function() {
+      window.location.href = 'http://localhost:3000/marketplace'
+    }
+
+
+    })
